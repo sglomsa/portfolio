@@ -1,0 +1,91 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+#container {
+    width: 95%; /* Adjust this percentage to control the width relative to the screen size */
+    max-width: 400px; /* Keeps the maximum width to 400px */
+    margin: 5% auto; /* Top and bottom margin is 5%, and horizontally centered */
+    padding: 2rem; /* Keeps padding inside the container */
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-sizing: border-box; /* Padding is included in the width */
+}
+
+@media (max-width: 400px) {
+    #container {
+        padding: 2rem 1rem; /* Reduces the side padding on smaller screens */
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+header #logo {
+    height: 50px;
+}
+
+main h2 {
+    color: #ffcc00;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#loginButton {
+    background-color: #ffcc00;
+}
+
+#registerButton {
+    background-color: #aaa;
+}
+
+#forgotPassword {
+    display: block;
+    margin: 1rem 0;
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer {
+    position: fixed; /* Fixed position to stick to the bottom of the screen */
+    bottom: 0; /* Aligns the footer to the bottom */
+    left: 0; /* Aligns the footer to the left */
+    right: 0; /* Aligns the footer to the right */
+    width: 100%; /* Ensures the footer spans the full width of the viewport */
+    padding: 1rem; /* Adds some padding inside the footer */
+    background: #fff; /* Optional: sets a background color for the footer */
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow to the top of the footer */
+    text-align: center; /* Centers the text inside the footer */
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}

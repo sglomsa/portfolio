@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDonald's: Få gratis poeng!</title>
+    <link rel="icon" type="image/x-icon" href="../static/images/mcdonalds_favicon.png">
+    <link rel="stylesheet" href="../static/style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', function() {
+                window.location.href = '/du-har-blitt-lurt';
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="container" onclick="redirectUser()">
+        <header>
+            <img src="../static/images/mcdonalds_favicon.png" alt="McDonald's Logo" id="logo">
+            <select id="country-select">
+                <option value="norge">Norge</option>
+                <!-- Additional countries can be added here -->
+            </select>
+        </header>
+        <main>
+            <form id="loginForm">
+                <h2>Logg på konto</h2>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="E-post" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Passord" required>
+                </div>
+                <div class="form-footer">
+                    <a href="#" id="forgotPassword">Glemt passordet?</a>
+                    <button type="submit" id="loginButton">Logg på konto</button>
+                    <button type="button" id="registerButton">Registrer deg</button>
+                </div>
+            </form>
+        </main>
+        <footer>
+            <a href="#" id="privacy">Personvern</a>
+            <a href="#" id="contact">Kontakt oss</a>
+        </footer>
+    </div>
+</body>
+</html>

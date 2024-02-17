@@ -1,0 +1,75 @@
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: left;
+    font-size: 40px;
+}
+
+h1, p ,h2, ul{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.grid-container1 {
+    display: grid;
+    grid-template-columns: auto;
+    background-color: #ffffff;
+    padding: 50px;
+    text-align: left;
+	font-family: Roboto-Black;
+}
+
+.grid-container2 {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 10px;
+	font-family: Roboto-Black;
+    text-align: left;
+    }
+
+.grid-container3 {
+    display: grid;
+    font-family: Roboto-Black;
+    text-align: center;
+    text-align-last: auto;
+}
+
+.grid-item {
+    padding: 10px;
+}
+
+.logo{
+	width: 40%;
+	cursor: pointer;
+}
+
+#scam{
+    width: 100%;
+}
+
+.button{
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 40px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #007bff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  min-width: 700px;
+  margin: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.button:hover {
+    background-color: #0056b3;
+  }
+
+ 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Home</title>
+</head>
+<body>
+    <h1>NeutrAI - The Bias Buster</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+   <form action="/upload" method="post" enctype="multipart/form-data">
+       <input type="file" name="file" />
+       <input type="text" name="context" />
+       <input type="submit" value="Upload" onclick="window.location='/analyze?file_path='+document.querySelector('input[name=file]').value;" />
+   </form>
+</body>
+</html>
+
+

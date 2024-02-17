@@ -1,0 +1,15 @@
+# IDE files
+.idea/
+
+# Virtual environment
+.venv/
+
+# Configuration files
+directories.json
+
+# Directory for user-created profiles
+profiles/
+
+# Python cache files
+*__pycache__/
+*.pytest_cache/
