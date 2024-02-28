@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-def read_json_data(file_path):
+def read_json_data(file_path) -> dict:
     """Reads and returns the contents of a JSON file"""
     try:
         with open(file_path, "r", encoding="utf-8") as file:

@@ -2,12 +2,13 @@ import datetime
 import json
 import os
 import shutil
+from argparse import Namespace
 from pathlib import Path
 
 from . import utils
 
 
-def set_game_dir(args):
+def set_game_dir(args: Namespace):
     """Saves the path for the RDR2 game directory into 'directories.json'
     for use by other commands
     """
@@ -17,7 +18,7 @@ def set_game_dir(args):
     utils.write_json_data(path, data)
 
 
-def print_game_dir():
+def print_game_dir(args: Namespace):
     """Prints out the saved path for the RDR2 game directory,
     and provides instructions if it hasn't been set yet
     """
@@ -28,7 +29,7 @@ def print_game_dir():
         print("Use 'set-game-directory' to set it.")
 
 
-def create_profile(args, test=False, test_dir=""):
+def create_profile(args: Namespace, test: bool = False, test_dir: str = ""):
     """Creates a new profile in the 'profiles' folder
     with the given name and description
     """
@@ -52,7 +53,6 @@ def create_profile(args, test=False, test_dir=""):
                 "lastUpdated": str(datetime.date.today()),
                 "description": args.description
                 },
-            "modDirectories": [],
             "modFiles": []
             }
         # fmt: on
@@ -62,8 +62,8 @@ def create_profile(args, test=False, test_dir=""):
             json.dump(initial_data, file, indent=4)
 
 
-def list_profiles(test=False, test_dir=""):
-    """Lists all the profiles in the 'profiles' folder"""
+def list_profiles(args: Namespace, test: bool = False, test_dir: str = ""):
+    """Lists all the profiles in the 'profiles' folder """
     if test:
         profiles_dir_path = Path(test_dir)
     else:
@@ -94,12 +94,12 @@ def list_profiles(test=False, test_dir=""):
         print("You do not have any profiles!")
 
 
-def print_version():
+def print_version(args: Namespace):
     """Prints the version of 'RDR2 Mod Profile Manager'"""
     print("Development stage")
 
 
-def set_profiles_dir(args):
+def set_profiles_dir(args: Namespace):
     """Saves the path to the directory where profiles should be saved"""
     path = Path(utils.get_root() / "directories.json")
     data = utils.read_json_data(path)
@@ -107,7 +107,7 @@ def set_profiles_dir(args):
     utils.write_json_data(path, data)
 
 
-def delete_profile(args, test=False, test_dir=""):
+def delete_profile(args: Namespace, test: bool = False, test_dir: str = ""):
     """Deletes a profile, including all mods within it.
     It will request confirmation unless a flag is used (-y/--yes)
     """
@@ -115,6 +115,7 @@ def delete_profile(args, test=False, test_dir=""):
         profiles_path = test_dir
     else:
         profiles_path = utils.get_profiles_dir_path()
+
     if args.yes:
         try:
             shutil.rmtree(f"{profiles_path}/{args.profile_name}")
@@ -123,8 +124,9 @@ def delete_profile(args, test=False, test_dir=""):
         else:
             print(f"Successfully deleted '{args.profile_name}'")
     else:
-        prompt = "Are you sure you want to delete "
-        prompt += f"'{args.profile_name}' including all its mods? (yes/no)\n> "
+        prompt = "Are you sure you want to delete the profile "
+        prompt += f"'{args.profile_name}' including all its mods?"
+        prompt += "\nThis action cannot be undone. (yes/no)\n> "
         confirmation = input(prompt)
         while confirmation.lower() != "yes" and confirmation.lower() != "no":
             prompt = "Invalid input. Please write either 'yes' or 'no'\n> "
@@ -137,10 +139,10 @@ def delete_profile(args, test=False, test_dir=""):
             else:
                 print(f"Successfully deleted '{args.profile_name}'")
         else:
-            print("Deletion cancelled")
+            print("Deletion cancelled.")
 
 
-def print_profiles_dir():
+def print_profiles_dir(args: Namespace):
     """Prints out the saved path for the 'profiles' directory,
     and provides instructions if it hasn't been set yet
     """
@@ -151,13 +153,39 @@ def print_profiles_dir():
         print("Use 'set-profiles-directory' to set it.")
 
 
-def list_commands():
+def list_commands(args: Namespace):
     """Lists all commands along with some help text"""
-    commands = {
+    commands: dict = {
         "set-game_dir <path-to-game-directory>": "sets the RDR2 game directory",
-        "list-profiles                       ": "list all profiles",
-        "version                             ": "prints out the version of 'RDR2 Mod Profile Manager'",
-        "...                                 ": "...",
-    }
+        "list-profiles": "list all profiles",
+        "version": "prints out the version of 'RDR2 Mod Profile Manager'",
+        "...": "...",
+        }
     for command, help in commands.items():
-        print(f"{command}\t\t{help}")
+        print(f"{command:45}{help}")
+
+
+def update_profile(args: Namespace, test: bool = False, test_dir: str = ""):
+    """Updates a profile's mod configuration by adding all mods
+    in the profile to the profile.json file
+    """
+    if test:
+        profiles_path = test_dir
+    else:
+        profiles_path = utils.get_profiles_dir_path()
+    profile_path = Path(f"{profiles_path}/{args.profile_name}")
+
+    all_files = []
+    for dir_path, dir_names, file_names in os.walk(profile_path):
+        for file_name in file_names:
+            if file_name == 'profile.json':
+                continue
+            full_path = os.path.join(dir_path, file_name)
+            relative_path = os.path.relpath(full_path, profile_path)
+            relative_path = relative_path.replace("\\", "/")
+            all_files.append(relative_path)
+
+    profile_data = utils.read_json_data(f"{profile_path}/profile.json")
+    profile_data["modFiles"] = all_files
+    utils.write_json_data(f"{profile_path}/profile.json",
+                          profile_data)
